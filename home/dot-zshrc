@@ -30,5 +30,9 @@ function r() {
 
 alias cd="z"
 alias lg="lazygit"
-alias ls="eza"
 
+function dl() {
+	it=$(ls -t ~/Downloads | head -n1)
+	echo "$it"
+	mv ~/Downloads/"$it" .
+}

@@ -78,6 +78,7 @@
 
   environment.systemPackages = with pkgs; [
     alejandra
+    atool
     delta
     eza
     fzf
@@ -90,8 +91,10 @@
     just
     lazygit
     nix-index
+    p7zip
     starship
     stow
+    unzip
     vicinae
     wezterm
     wget
@@ -100,6 +103,19 @@
     yazi
     zoxide
   ];
+   
+  systemd.user.services.vicinae-server = {
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session-pre.target" ];
+    partOf = [ "graphical-session.target" ];
+    
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.vicinae}/bin/vicinae server";
+      Restart = "on-failure";
+      RestartSec = 3;
+    };
+  };
 
   environment.sessionVariables = {
     PATH = ["/usr/local/bin"];

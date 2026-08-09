@@ -1,0 +1,12 @@
+[[open.prepend_rules]]
+mime = "application/*zip*"
+use = "atool_extract"
+
+[[open.prepend_rules]]
+mime = "application/x-tar"
+use = "atool_extract"
+
+[opener]
+atool_extract = [
+	{ run = 'atool -x "$@"', orphan = true, desc = "Extract archive" }
+]

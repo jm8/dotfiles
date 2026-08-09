@@ -1,0 +1,80 @@
+[meta]
+version = 1
+name = "Catppuccin Macchiato Blue"
+description = "Medium contrast with gentle colors creating a soothing atmosphere."
+variant = "dark"
+inherits = "vicinae-dark"
+icon = "icons/catppuccin.png"
+
+[colors.core]
+accent = "#8aadf4"
+accent_foreground = "#24273a"
+background = "#181926"
+foreground = "#cad3f5"
+secondary_background = "#1e2030"
+border = "#24273a"
+
+[colors.main_window]
+border = "#24273a"
+footer = { background = "colors.core.secondary_background" }
+
+[colors.settings_window]
+border = "#24273a"
+
+[colors.accents]
+blue = "#8aadf4"
+green = "#a6da95"
+magenta = "#c6a0f6"
+orange = "#f5a97f"
+red = "#ed8796"
+yellow = "#eed49f"
+cyan = "#8bd5ca"
+purple = "#c6a0f6"
+
+[colors.shortcut]
+border = "colors.core.border"
+
+[colors.text]
+default = "colors.core.foreground"
+muted = "#cad3f5"
+danger = "#ed8796"
+success = "#a6da95"
+placeholder = "#cad3f5"
+selection = { background = "#363a4f", foreground = "#cad3f5" }
+
+[colors.text.links]
+default = "#8aadf4"
+visited = "#b7bdf8"
+
+[colors.input]
+border = "#24273a"
+border_focus = "#8aadf4"
+border_error = "#ed8796"
+
+[colors.button.primary]
+background = "#24273a"
+foreground = "#cad3f5"
+hover = { background = "#2eed8796" }
+focus = { outline = "colors.core.accent" }
+
+[colors.list.item.hover]
+foreground = "#cad3f5"
+secondary_foreground = "#cad3f5"
+
+[colors.list.item.selection]
+background = "#24273a"
+foreground = "#cad3f5"
+secondary_background = "#24273a"
+secondary_foreground = "#cad3f5"
+
+[colors.grid.item]
+background = "#1e2030"
+hover = { outline = "#cad3f5" }
+selection = { outline = "#cad3f5" }
+
+[colors.scrollbars]
+background = "#24273a"
+
+[colors.loading]
+bar = "#cad3f5"
+spinner = "#cad3f5"
