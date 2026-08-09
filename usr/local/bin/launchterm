@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+pane=$(
+  wezterm cli list-clients --format json |
+  jq -r '.[0].focused_pane_id'
+)
+dir=$(wezterm cli list --format json | jq -r --argjson pane "$pane" '.[] | select(.pane_id == $pane) | .cwd' | sed 's_file://__')
+
+echo $dir > ~/dir.txt
