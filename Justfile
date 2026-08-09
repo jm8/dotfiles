@@ -17,3 +17,5 @@ vicinae:
 dconf:
     dconf load / < dconf.txt
 
+zcompile:
+    find -name '*.zsh' -exec zsh -c 'zcompile {}' ';'
