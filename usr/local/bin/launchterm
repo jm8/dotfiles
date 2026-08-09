@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
-
-pane=$(
-  wezterm cli list-clients --format json |
-  jq -r '.[0].focused_pane_id'
-)
-dir=$(wezterm cli list --format json | jq -r --argjson pane "$pane" '.[] | select(.pane_id == $pane) | .cwd' | sed 's_file://__')
-
-echo $dir > ~/dir.txt
+#!/usr/bin/env zsh
+dir=$(ls -lah /proc/$(pgrep -P $(xdotool getwindowpid $(xdotool getwindowfocus)) zsh)/cwd | awk '{print $NF}')
+if [ -d "$dir" ]; then
+  wezterm start --always-new-process --cwd "$dir"
+else
+  wezterm start --always-new-process
+fi
