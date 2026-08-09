@@ -13,3 +13,7 @@ paperwm:
 
 vicinae:
     gnome-extensions install --force ./vicinae@dagimg-dot.shell-extension-v1.6.2.zip
+
+dconf:
+    dconf load / < dconf.txt
+
