@@ -79,8 +79,10 @@
   environment.systemPackages = with pkgs; [
     alejandra
     delta
+    eza
     fzf
     gcc
+    gh
     git
     gnumake
     helix
@@ -97,7 +99,6 @@
     xdotool
     yazi
     zoxide
-    gh
   ];
 
   environment.sessionVariables = {

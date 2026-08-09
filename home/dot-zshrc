@@ -30,4 +30,5 @@ function r() {
 
 alias cd="z"
 alias lg="lazygit"
+alias ls="eza"
 
