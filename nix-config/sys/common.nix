@@ -3,6 +3,38 @@
   pkgs,
   ...
 }: {
+  environment.systemPackages = with pkgs; [
+    alejandra
+    atool
+    delta
+    eza
+    fzf
+    gcc
+    gh
+    git
+    gnumake
+    helix
+    jq
+    just
+    lazygit
+    mpv
+    nix-index
+    p7zip
+    ruff
+    starship
+    stow
+    ty
+    unzip
+    vicinae
+    wezterm
+    wget
+    wl-clipboard
+    xdotool
+    yazi
+    yt-dlp
+    zoxide
+  ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -73,39 +105,11 @@
 
   programs.nix-ld.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    alejandra
-    atool
-    delta
-    eza
-    fzf
-    gcc
-    gh
-    git
-    gnumake
-    helix
-    jq
-    just
-    lazygit
-    nix-index
-    p7zip
-    starship
-    stow
-    unzip
-    vicinae
-    wezterm
-    wget
-    wl-clipboard
-    xdotool
-    yazi
-    zoxide
-  ];
-   
   systemd.user.services.vicinae-server = {
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "graphical-session-pre.target" ];
-    partOf = [ "graphical-session.target" ];
-    
+    wantedBy = ["graphical-session.target"];
+    after = ["graphical-session-pre.target"];
+    partOf = ["graphical-session.target"];
+
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.vicinae}/bin/vicinae server";
