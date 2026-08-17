@@ -6,8 +6,14 @@
   environment.systemPackages = with pkgs; [
     alejandra
     atool
+    gimp
+    anki
+    azahar
     delta
+    clang-tools
     eza
+    curl
+    zip
     fzf
     gcc
     gh
@@ -20,6 +26,7 @@
     mpv
     nix-index
     p7zip
+    python3
     ruff
     starship
     stow

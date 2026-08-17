@@ -3,7 +3,6 @@ autoload -Uz compinit
 # autoload -Uz bashcompinit
 compinit -C
 # bashcompinit -C
-source ~/dotfiles/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source ~/dotfiles/zsh/zsh-autosuggestions.zsh
 source ~/dotfiles/zsh/git.zsh
 source ~/dotfiles/zsh/completion.zsh
@@ -11,6 +10,7 @@ source ~/dotfiles/zsh/starship.zsh
 source ~/dotfiles/zsh/zoxide.zsh
 source ~/dotfiles/zsh/key-bindings.zsh
 source ~/dotfiles/zsh/fzf.zsh
+source ~/dotfiles/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 function precmd() {
   print -P "\e]7;file://${HOSTNAME}${PWD}\a"
@@ -19,20 +19,25 @@ function precmd() {
 export EDITOR="hx"
 export VISUAL="hx"
 
+alias cd="z"
+alias lg="lazygit"
+
 function r() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
 	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
+		z -- "$cwd"
 	fi
 	rm -f -- "$tmp"
 }
-
-alias cd="z"
-alias lg="lazygit"
 
 function dl() {
 	it=$(ls -t ~/Downloads | head -n1)
 	echo "$it"
 	mv ~/Downloads/"$it" .
+}
+
+function pkg() {
+	hx ~/dotfiles/nix-config/sys/common.nix
+	env -C ~/dotfiles just nix
 }

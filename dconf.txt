@@ -1,12 +1,71 @@
+[org/gnome/Console]
+last-window-maximised=false
+last-window-size=(732, 1056)
+
+[org/gnome/Extensions]
+window-height=1056
+
+[org/gnome/control-center]
+last-panel='keyboard'
+window-state=(763, 1056, false)
+
+[org/gnome/desktop/app-folders]
+folder-children=['System', 'Utilities', 'YaST', 'Pardus']
+
+[org/gnome/desktop/app-folders/folders/Pardus]
+categories=['X-Pardus-Apps']
+name='X-Pardus-Apps.directory'
+translate=true
+
+[org/gnome/desktop/app-folders/folders/System]
+apps=['org.gnome.baobab.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.Logs.desktop', 'org.gnome.SystemMonitor.desktop']
+name='X-GNOME-Shell-System.directory'
+translate=true
+
+[org/gnome/desktop/app-folders/folders/Utilities]
+apps=['org.gnome.Decibels.desktop', 'org.gnome.Connections.desktop', 'org.gnome.Papers.desktop', 'org.gnome.font-viewer.desktop', 'org.gnome.Loupe.desktop', 'org.gnome.seahorse.Application.desktop']
+name='X-GNOME-Shell-Utilities.directory'
+translate=true
+
+[org/gnome/desktop/app-folders/folders/YaST]
+categories=['X-SuSE-YaST']
+name='suse-yast.directory'
+translate=true
+
 [org/gnome/desktop/input-sources]
 sources=[('xkb', 'us')]
 xkb-options=['caps:escape']
 
 [org/gnome/desktop/interface]
 color-scheme='prefer-dark'
+toolkit-accessibility=false
 
-[org/gnome/settings-daemon/plugins/power]
-ambient-enabled=false
+[org/gnome/desktop/notifications]
+application-children=['vicinae', 'firefox', 'gnome-about-panel', 'gnome-power-panel', 'org-wezfurlong-wezterm', 'gimp', 'org-azahar-emu-azahar']
+
+[org/gnome/desktop/notifications/application/firefox]
+application-id='firefox.desktop'
+
+[org/gnome/desktop/notifications/application/gimp]
+application-id='gimp.desktop'
+
+[org/gnome/desktop/notifications/application/gnome-about-panel]
+application-id='gnome-about-panel.desktop'
+
+[org/gnome/desktop/notifications/application/gnome-power-panel]
+application-id='gnome-power-panel.desktop'
+
+[org/gnome/desktop/notifications/application/org-azahar-emu-azahar]
+application-id='org.azahar_emu.Azahar.desktop'
+
+[org/gnome/desktop/notifications/application/org-wezfurlong-wezterm]
+application-id='org.wezfurlong.wezterm.desktop'
+
+[org/gnome/desktop/notifications/application/vicinae]
+application-id='vicinae.desktop'
+
+[org/gnome/desktop/search-providers]
+sort-order=['org.gnome.Settings.desktop', 'org.gnome.Contacts.desktop', 'org.gnome.Nautilus.desktop']
 
 [org/gnome/desktop/wm/keybindings]
 activate-window-menu=@as []
@@ -16,8 +75,8 @@ move-to-monitor-left=['<Super><Shift>Left']
 move-to-monitor-right=['<Super><Shift>Right']
 move-to-monitor-up=@as []
 move-to-workspace-down=@as []
-move-to-workspace-left=['<Super><Shift>Page_Up', '<Super><Shift>KP_Prior', '<Super><Shift><Alt>Left', '<Control><Shift><Alt>Left']
-move-to-workspace-right=['<Super><Shift>Page_Down', '<Super><Shift>KP_Next', '<Super><Shift><Alt>Right', '<Control><Shift><Alt>Right']
+move-to-workspace-left=@as []
+move-to-workspace-right=@as []
 move-to-workspace-up=@as []
 switch-applications=@as []
 switch-applications-backward=@as []
@@ -34,7 +93,7 @@ unmaximize=@as []
 [org/gnome/mutter]
 attach-modal-dialogs=false
 edge-tiling=false
-overlay-key=''
+overlay-key='Super'
 workspaces-only-on-primary=false
 
 [org/gnome/mutter/keybindings]
@@ -47,6 +106,19 @@ restore-shortcuts=@as []
 
 [org/gnome/nautilus/preferences]
 migrated-gtk-settings=true
+
+[org/gnome/nautilus/window-state]
+initial-size=(890, 1056)
+initial-size-file-chooser=(890, 550)
+
+[org/gnome/portal/filechooser/firefox]
+last-folder-path='/home/josh/Downloads'
+
+[org/gnome/settings-daemon/plugins/color]
+night-light-schedule-automatic=false
+
+[org/gnome/settings-daemon/plugins/housekeeping]
+donation-reminder-last-shown=int64 1786328219318804
 
 [org/gnome/settings-daemon/plugins/media-keys]
 custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']
@@ -63,13 +135,22 @@ binding='<Alt>space'
 command='vicinae open'
 name='vicinae'
 
+[org/gnome/settings-daemon/plugins/power]
+ambient-enabled=false
+
+[org/gnome/shell]
+disabled-extensions=@as []
+enabled-extensions=['no-overview@fthx', 'vicinae@dagimg-dot', 'paperwm@paperwm.github.com']
+last-selected-power-profile='power-saver'
+welcome-dialog-last-shown-version='50.2'
+
 [org/gnome/shell/extensions/paperwm]
 edge-preview-scale=0.26000000000000001
 last-used-display-server='Wayland'
 minimap-scale=0.0
 restore-attach-modal-dialogs='true'
 restore-edge-tiling='true'
-restore-keybinds='{"toggle-tiled-left":{"bind":"[\\"<Super>Left\\"]","schema_id":"org.gnome.mutter.keybindings"},"toggle-tiled-right":{"bind":"[\\"<Super>Right\\"]","schema_id":"org.gnome.mutter.keybindings"},"cancel-input-capture":{"bind":"[\\"<Super><Shift>Escape\\"]","schema_id":"org.gnome.mutter.keybindings"},"restore-shortcuts":{"bind":"[\\"<Super>Escape\\"]","schema_id":"org.gnome.mutter.wayland.keybindings"},"switch-to-workspace-last":{"bind":"[\\"<Super>End\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-panels":{"bind":"[\\"<Control><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-group-backward":{"bind":"[\\"<Shift><Super>Above_Tab\\",\\"<Shift><Alt>Above_Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"unmaximize":{"bind":"[\\"<Super>Down\\",\\"<Alt>F5\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-1":{"bind":"[\\"<Super>Home\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-monitor-down":{"bind":"[\\"<Super><Shift>Down\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-group":{"bind":"[\\"<Super>Above_Tab\\",\\"<Alt>Above_Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-panels-backward":{"bind":"[\\"<Shift><Control><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-left":{"bind":"[\\"<Super>Page_Up\\",\\"<Super>KP_Prior\\",\\"<Super><Alt>Left\\",\\"<Control><Alt>Left\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-up":{"bind":"[\\"<Control><Shift><Alt>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-right":{"bind":"[\\"<Super>Page_Down\\",\\"<Super>KP_Next\\",\\"<Super><Alt>Right\\",\\"<Control><Alt>Right\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-down":{"bind":"[\\"<Control><Shift><Alt>Down\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-applications":{"bind":"[\\"<Super>Tab\\",\\"<Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"maximize":{"bind":"[\\"<Super>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-applications-backward":{"bind":"[\\"<Shift><Super>Tab\\",\\"<Shift><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-monitor-up":{"bind":"[\\"<Super><Shift>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"shift-overview-up":{"bind":"[\\"<Super><Alt>Up\\"]","schema_id":"org.gnome.shell.keybindings"},"shift-overview-down":{"bind":"[\\"<Super><Alt>Down\\"]","schema_id":"org.gnome.shell.keybindings"},"focus-active-notification":{"bind":"[\\"<Super>n\\"]","schema_id":"org.gnome.shell.keybindings"},"toggle-message-tray":{"bind":"[\\"<Super>v\\",\\"<Super>m\\"]","schema_id":"org.gnome.shell.keybindings"}}'
+restore-keybinds='{"toggle-tiled-left":{"bind":"[\\"<Super>Left\\"]","schema_id":"org.gnome.mutter.keybindings"},"toggle-tiled-right":{"bind":"[\\"<Super>Right\\"]","schema_id":"org.gnome.mutter.keybindings"},"cancel-input-capture":{"bind":"[\\"<Super><Shift>Escape\\"]","schema_id":"org.gnome.mutter.keybindings"},"restore-shortcuts":{"bind":"[\\"<Super>Escape\\"]","schema_id":"org.gnome.mutter.wayland.keybindings"},"switch-to-workspace-last":{"bind":"[\\"<Super>End\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-panels":{"bind":"[\\"<Control><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-group-backward":{"bind":"[\\"<Shift><Super>Above_Tab\\",\\"<Shift><Alt>Above_Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"unmaximize":{"bind":"[\\"<Super>Down\\",\\"<Alt>F5\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-1":{"bind":"[\\"<Super>Home\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-monitor-down":{"bind":"[\\"<Super><Shift>Down\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-group":{"bind":"[\\"<Super>Above_Tab\\",\\"<Alt>Above_Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-left":{"bind":"[\\"<Super><Shift>Page_Up\\",\\"<Super><Shift>KP_Prior\\",\\"<Super><Shift><Alt>Left\\",\\"<Control><Shift><Alt>Left\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-right":{"bind":"[\\"<Super><Shift>Page_Down\\",\\"<Super><Shift>KP_Next\\",\\"<Super><Shift><Alt>Right\\",\\"<Control><Shift><Alt>Right\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-panels-backward":{"bind":"[\\"<Shift><Control><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-left":{"bind":"[\\"<Super>Page_Up\\",\\"<Super>KP_Prior\\",\\"<Super><Alt>Left\\",\\"<Control><Alt>Left\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-up":{"bind":"[\\"<Control><Shift><Alt>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-to-workspace-right":{"bind":"[\\"<Super>Page_Down\\",\\"<Super>KP_Next\\",\\"<Super><Alt>Right\\",\\"<Control><Alt>Right\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-workspace-down":{"bind":"[\\"<Control><Shift><Alt>Down\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-applications":{"bind":"[\\"<Super>Tab\\",\\"<Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"maximize":{"bind":"[\\"<Super>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"switch-applications-backward":{"bind":"[\\"<Shift><Super>Tab\\",\\"<Shift><Alt>Tab\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"move-to-monitor-up":{"bind":"[\\"<Super><Shift>Up\\"]","schema_id":"org.gnome.desktop.wm.keybindings"},"shift-overview-up":{"bind":"[\\"<Super><Alt>Up\\"]","schema_id":"org.gnome.shell.keybindings"},"shift-overview-down":{"bind":"[\\"<Super><Alt>Down\\"]","schema_id":"org.gnome.shell.keybindings"},"focus-active-notification":{"bind":"[\\"<Super>n\\"]","schema_id":"org.gnome.shell.keybindings"},"toggle-message-tray":{"bind":"[\\"<Super>v\\",\\"<Super>m\\"]","schema_id":"org.gnome.shell.keybindings"}}'
 restore-workspaces-only-on-primary='true'
 use-default-background=false
 winprops=['{"wm_class":"vicinae","scratch_layer":true}']
@@ -82,9 +163,9 @@ drift-left=['<Alt>bracketleft']
 drift-right=['<Alt>bracketright']
 move-down-workspace=['<Shift><Alt>c']
 move-left=['<Control><Super>comma', '<Shift><Super>comma', '<Control><Super>Left', '<Shift><Alt>a']
+move-monitor-left=['<Shift><Alt>exclam']
+move-monitor-right=['<Shift><Control><Super>Right', '<Shift><Alt>numbersign']
 move-right=['<Control><Super>period', '<Shift><Super>period', '<Control><Super>Right', '<Shift><Alt>d']
-move-space-monitor-left=['<Shift><Alt>exclam']
-move-space-monitor-right=['<Shift><Alt>numbersign']
 move-up-workspace=['<Shift><Alt>z']
 slurp-in=['<Alt>2']
 switch-down-workspace=['<Alt>c']
@@ -97,8 +178,49 @@ switch-previous=['<Alt>a']
 switch-up-workspace=['<Alt>z']
 toggle-maximize-width=['<Alt>w']
 
+[org/gnome/shell/extensions/paperwm/workspaces]
+list=['93062d32-4dc3-4909-9624-d533e51ea86b', 'e3978446-d08b-4c99-a965-71cf5d5e15f3', '2060bdbb-c8dd-4b77-822e-f02155fb0146', 'f7dc6521-afe7-49d3-ab28-00e80acb4c31', '15a15d09-31df-4940-94dd-5985b1dd20a8']
+
+[org/gnome/shell/extensions/paperwm/workspaces/15a15d09-31df-4940-94dd-5985b1dd20a8]
+index=4
+
+[org/gnome/shell/extensions/paperwm/workspaces/2060bdbb-c8dd-4b77-822e-f02155fb0146]
+index=2
+
+[org/gnome/shell/extensions/paperwm/workspaces/93062d32-4dc3-4909-9624-d533e51ea86b]
+index=0
+
+[org/gnome/shell/extensions/paperwm/workspaces/e3978446-d08b-4c99-a965-71cf5d5e15f3]
+index=1
+
+[org/gnome/shell/extensions/paperwm/workspaces/f7dc6521-afe7-49d3-ab28-00e80acb4c31]
+index=3
+
 [org/gnome/shell/keybindings]
 focus-active-notification=@as []
 shift-overview-down=@as []
 shift-overview-up=@as []
 toggle-message-tray=@as []
+
+[org/gnome/shell/world-clocks]
+locations=@av []
+
+[org/gnome/tweaks]
+show-extensions-notice=false
+
+[org/gtk/settings/color-chooser]
+selected-color=(true, 1.0, 1.0, 1.0, 1.0)
+
+[org/gtk/settings/file-chooser]
+date-format='regular'
+location-mode='path-bar'
+show-hidden=false
+show-size-column=true
+show-type-column=true
+sidebar-width=167
+sort-column='name'
+sort-directories-first=false
+sort-order='ascending'
+type-format='category'
+window-position=(26, 23)
+window-size=(1231, 902)
