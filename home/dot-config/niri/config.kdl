@@ -106,6 +106,7 @@ switch-events {
 // https://niri-wm.github.io/niri/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
+    background-color "#303446"
     gaps 16
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -194,7 +195,7 @@ layout {
     // You can enable drop shadows for windows.
     shadow {
         // Uncomment the next line to enable shadows.
-        // on
+        off
         // By default, the shadow draws only around its window, and not behind it.
         // Uncomment this setting to make the shadow draw behind its window.
         //
@@ -239,7 +240,7 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "waybar"
+spawn-at-startup "dms run"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 hotkey-overlay {
@@ -272,15 +273,15 @@ animations {
 // https://niri-wm.github.io/niri/Configuration:-Window-Rules
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
-window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id="^org\\.wezfurlong\\.wezterm$"
-    default-column-width {
+// window-rule {
+//     // This regular expression is intentionally made as specific as possible,
+//     // since this is the default config, and we want no false positives.
+//     // You can get away with just app-id="wezterm" if you want.
+//     match app-id="^org\\.wezfurlong\\.wezterm$"
+//     default-column-width {
 
-    }
-}
+//     }
+// }
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
     // This app-id regular expression will work for both:
@@ -348,7 +349,7 @@ binds {
     XF86MonBrightnessDown allow-when-locked=true {
         spawn "dms" "ipc" "call" "brightness" "decrement" "5" ""
     }
-    Mod+O repeat=false {
+    Mod+F repeat=false {
         toggle-overview
     }
     Alt+Q repeat=false {
@@ -504,9 +505,9 @@ binds {
     Mod+Shift+Equal {
         set-window-height "+10%"
     }
-    Mod+F {
-        toggle-window-floating
-    }
+    // Mod+F {
+    //     toggle-window-floating
+    // }
     Mod+T {
         switch-focus-between-floating-and-tiling
     }
@@ -545,4 +546,6 @@ binds {
         spawn "dms" "ipc" "call" "lock" "lock"
     }
 }
-
+overview {
+    backdrop-color "#303446"
+}

@@ -552,9 +552,7 @@
   "updaterIgnoredPackages": [],
   "displayNameMode": "system",
   "screenPreferences": {
-    "wallpaper": [
-      "all"
-    ]
+    "wallpaper": []
   },
   "showOnLastDisplay": {},
   "niriOutputSettings": {},
