@@ -7,6 +7,9 @@
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pwndbg = {
+      url = "github:pwndbg/pwndbg";
+    };
   };
 
   outputs = {
@@ -17,11 +20,15 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
+      config.allowUnfreePredicate = pkg:
+        builtins.elem (nixpkgs.lib.getName pkg) [
+          "google-chrome"
+        ];
     };
   in {
     nixosConfigurations.stryver = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = attrs;
+      specialArgs = attrs // {inherit pkgs system;};
       modules = [
         ./sys/common.nix
         ./sys/stryver.nix

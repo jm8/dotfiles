@@ -1,9 +1,13 @@
 {
   config,
   pkgs,
+  pwndbg,
+  system,
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    typst
+    tinymist
     alejandra
     atool
     gimp
@@ -40,6 +44,12 @@
     yazi
     yt-dlp
     zoxide
+    google-chrome
+    sshpass
+    gdb
+    file
+    ghidra
+    # pwndbg.packages.${system}.default
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -110,7 +120,15 @@
 
   programs.firefox.enable = true;
 
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib
+      glibc
+      openssl
+    ];
+  };
 
   systemd.user.services.vicinae-server = {
     wantedBy = ["graphical-session.target"];

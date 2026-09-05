@@ -3,6 +3,7 @@ theme = "catppuccin_macchiato"
 [editor]
 line-number = "relative"
 bufferline = "multiple"
+soft-wrap.enable = true
 
 [editor.cursor-shape]
 insert = "bar"

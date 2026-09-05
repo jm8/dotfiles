@@ -9,6 +9,10 @@ source ~/dotfiles/zsh/completion.zsh
 source ~/dotfiles/zsh/starship.zsh
 source ~/dotfiles/zsh/zoxide.zsh
 source ~/dotfiles/zsh/key-bindings.zsh
+if [ ! -e ~/dotfiles/zsh/fzf.zsh ]; then
+	fzf --init zshrc >> ~/dotfiles/zsh/fzf.zsh
+	zcompile ~/dotfiles/zsh/fzf.zsh
+fi
 source ~/dotfiles/zsh/fzf.zsh
 source ~/dotfiles/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
@@ -38,6 +42,8 @@ function dl() {
 }
 
 function pkg() {
-	hx ~/dotfiles/nix-config/sys/common.nix
+	hx ~/dotfiles/nix-config/sys/common.nix ~/dotfiles/nix-config/flake.nix 
 	env -C ~/dotfiles just nix
 }
+
+alias zshrc="hx ~/.zshrc; source ~/.zshrc"
