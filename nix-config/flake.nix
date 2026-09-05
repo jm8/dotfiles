@@ -7,9 +7,9 @@
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    pwndbg = {
-      url = "github:pwndbg/pwndbg";
-    };
+    # pwndbg = {
+    #   url = "github:pwndbg/pwndbg";
+    # };
   };
 
   outputs = {

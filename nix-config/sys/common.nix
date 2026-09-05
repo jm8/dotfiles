@@ -1,11 +1,13 @@
 {
   config,
   pkgs,
-  pwndbg,
+  # pwndbg,
   system,
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    xwayland-satellite
+    alacritty
     typst
     tinymist
     alejandra
@@ -91,14 +93,17 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  # services.displayManager.gdm.enable = true;
+  # services.desktopManager.gnome.enable = true;
+  programs.niri.enable = true;
+  programs.dms-shell.enable = true;
+  programs.dms-shell.systemd.enable = true;
 
   services.xserver.xkb = {
     layout = "us";
-    variant = "";
+    variant = "caps:escape";
   };
 
   services.printing.enable = true;
@@ -148,6 +153,7 @@
   };
 
   services.openssh.enable = true;
+  services.upower.enable = true;
 
   networking.firewall.allowedTCPPorts = [22];
 

@@ -24,7 +24,7 @@ return {
 	front_end = "WebGpu",
 	font_locator = "ConfigDirsOnly",
 	enable_tab_bar = false,
-	window_decorations = "RESIZE",
+	window_decorations = "NONE",
 	quick_select_patterns = {
 		'(?<=")[^"\\\\]*(?:\\\\.[^"\\\\]*)*(?=")',
 		"(?<=')[^'\\\\]*(?:\\\\.[^'\\\\]*)*(?=')",

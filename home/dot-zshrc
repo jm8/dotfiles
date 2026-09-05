@@ -42,7 +42,7 @@ function dl() {
 }
 
 function pkg() {
-	hx ~/dotfiles/nix-config/sys/common.nix ~/dotfiles/nix-config/flake.nix 
+	hx ~/dotfiles/nix-config/sys/common.nix:8 ~/dotfiles/nix-config/flake.nix 
 	env -C ~/dotfiles just nix
 }
 
