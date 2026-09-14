@@ -25,6 +25,8 @@ return {
 	font_locator = "ConfigDirsOnly",
 	enable_tab_bar = false,
 	window_decorations = "NONE",
+	font_size = 12.0,
+	adjust_window_size_when_changing_font_size = false,
 	quick_select_patterns = {
 		'(?<=")[^"\\\\]*(?:\\\\.[^"\\\\]*)*(?=")',
 		"(?<=')[^'\\\\]*(?:\\\\.[^'\\\\]*)*(?=')",
@@ -36,7 +38,7 @@ return {
 		bottom = 3,
 	},
 	keys = {
-		{ key = "e", mods = "CTRL", action = wezterm.action({ EmitEvent = "open-scrollback-in-helix" }) },
+		{ key = "e", mods = "CTRL|SHIFT", action = wezterm.action({ EmitEvent = "open-scrollback-in-helix" }) },
 	},
 	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 	warn_about_missing_glyphs=false,

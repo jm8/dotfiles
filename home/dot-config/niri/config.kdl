@@ -7,6 +7,7 @@
 // https://niri-wm.github.io/niri/Configuration:-Input
 input {
     mod-key "Alt"
+
     keyboard {
         xkb {
             // You can set rules, model, layout, variant and options.
@@ -81,7 +82,8 @@ input {
 // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
 mode "1920x1080@120.030"
 // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-scale 1.5
+scale 1.0
+// scale 1.5
 // Transform allows to rotate the output counter-clockwise, valid values are:
 // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
 transform "normal"
@@ -240,7 +242,7 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "dms run"
+spawn-at-startup "dms" "run"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 hotkey-overlay {
@@ -279,7 +281,6 @@ animations {
 //     // You can get away with just app-id="wezterm" if you want.
 //     match app-id="^org\\.wezfurlong\\.wezterm$"
 //     default-column-width {
-
 //     }
 // }
 // Open the Firefox picture-in-picture player as floating by default.
@@ -289,6 +290,10 @@ window-rule {
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id="firefox$" title="^Picture-in-Picture$"
     open-floating true
+}
+window-rule {
+    match app-id=".*ghidra.*"
+    min-height 400
 }
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
@@ -482,6 +487,9 @@ binds {
     Mod+M {
         maximize-window-to-edges
     }
+    Mod+Shift+M {
+        fullscreen-window
+    }
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
     Mod+Shift+W {
@@ -505,9 +513,9 @@ binds {
     Mod+Shift+Equal {
         set-window-height "+10%"
     }
-    // Mod+F {
-    //     toggle-window-floating
-    // }
+    Mod+G {
+        toggle-window-floating
+    }
     Mod+T {
         switch-focus-between-floating-and-tiling
     }
@@ -548,4 +556,9 @@ binds {
 }
 overview {
     backdrop-color "#303446"
+}
+gestures {
+    hot-corners {
+        off
+    }
 }

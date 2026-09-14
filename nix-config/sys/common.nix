@@ -1,13 +1,29 @@
 {
   config,
   pkgs,
-  # pwndbg,
+  pwndbg,
   system,
+  xwayland-satellite,
+  claude-code,
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    bind
+    uv
+    jdt-language-server
+    (cutter.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
+    (rizin.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
+    claude-code.packages.${system}.default
+    radare2
+    (python3.withPackages (ps: with ps; [pwntools]))
+    xxd
+    asm-lsp
+    wl-mirror
+    direnv
+    vscode
+    go-2fa
     kdlfmt
-    xwayland-satellite
+    xwayland-satellite.packages.${system}.default
     alacritty
     typst
     tinymist
@@ -33,7 +49,6 @@
     mpv
     nix-index
     p7zip
-    python3
     ruff
     starship
     stow
@@ -52,7 +67,7 @@
     gdb
     file
     ghidra
-    # pwndbg.packages.${system}.default
+    pwndbg.packages.${system}.default
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -100,7 +115,6 @@
   # services.desktopManager.gnome.enable = true;
   programs.niri.enable = true;
   programs.dms-shell.enable = true;
-  programs.dms-shell.systemd.enable = true;
 
   services.xserver.xkb = {
     layout = "us";
@@ -151,6 +165,8 @@
 
   environment.sessionVariables = {
     PATH = ["/usr/local/bin"];
+    _JAVA_AWT_WM_NONREPARENTING = 1;
+    _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
   };
 
   services.openssh.enable = true;

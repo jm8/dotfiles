@@ -1,1 +1,3 @@
 *.zwc
+fzf.zsh
+direnv.zsh

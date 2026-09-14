@@ -7,9 +7,16 @@
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # pwndbg = {
-    #   url = "github:pwndbg/pwndbg";
-    # };
+    xwayland-satellite = {
+      url = "github:olivierlemoal/xwayland-satellite";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+    };
+    pwndbg = {
+      url = "github:pwndbg/pwndbg";
+    };
   };
 
   outputs = {
@@ -23,6 +30,7 @@
       config.allowUnfreePredicate = pkg:
         builtins.elem (nixpkgs.lib.getName pkg) [
           "google-chrome"
+          "vscode"
         ];
     };
   in {

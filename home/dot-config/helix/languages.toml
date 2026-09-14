@@ -21,3 +21,12 @@ name = "python"
 language-servers = ["ruff", "ty"]
 formatter = { command = "ruff", args = ["format", "-"] }
 auto-format = true
+
+[[language]]
+name = "gas"
+scope = "source.gas"
+file-types = ["s", "S"]
+injection-regex = "gas"
+comment-token = "#"
+indent = { tab-width = 8, unit = "        " }
+language-servers = ["asm-lsp"]

@@ -10,10 +10,15 @@ source ~/dotfiles/zsh/starship.zsh
 source ~/dotfiles/zsh/zoxide.zsh
 source ~/dotfiles/zsh/key-bindings.zsh
 if [ ! -e ~/dotfiles/zsh/fzf.zsh ]; then
-	fzf --init zshrc >> ~/dotfiles/zsh/fzf.zsh
+	fzf --zsh > ~/dotfiles/zsh/fzf.zsh
 	zcompile ~/dotfiles/zsh/fzf.zsh
 fi
 source ~/dotfiles/zsh/fzf.zsh
+if [ ! -e ~/dotfiles/zsh/direnv.zsh ]; then
+	direnv hook zsh > ~/dotfiles/zsh/direnv.zsh
+	zcompile ~/dotfiles/zsh/direnv.zsh
+fi
+source ~/dotfiles/zsh/direnv.zsh
 source ~/dotfiles/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 function precmd() {
@@ -42,8 +47,12 @@ function dl() {
 }
 
 function pkg() {
-	hx ~/dotfiles/nix-config/sys/common.nix:8 ~/dotfiles/nix-config/flake.nix 
+	hx ~/dotfiles/nix-config/sys/common.nix:$(grep --line-number "with pkgs" ~/dotfiles/nix-config/sys/common.nix | head -n1 | cut -d: -f1) ~/dotfiles/nix-config/flake.nix 
 	env -C ~/dotfiles just nix
+}
+
+function take() {
+	mkdir "$1" && cd "$1"
 }
 
 alias zshrc="hx ~/.zshrc; source ~/.zshrc"
