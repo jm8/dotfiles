@@ -39,8 +39,19 @@
       specialArgs = attrs // {inherit pkgs system;};
       modules = [
         ./sys/common.nix
+        ./sys/graphical.nix
         ./sys/stryver.nix
         nixos-hardware.nixosModules.framework-12th-gen-intel
+      ];
+    };
+
+    nixosConfigurations.estella = nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = attrs // {inherit pkgs system;};
+      modules = [
+        ./sys/common.nix
+        ./sys/server.nix
+        ./sys/estella.nix
       ];
     };
   };

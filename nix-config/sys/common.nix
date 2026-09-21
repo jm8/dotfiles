@@ -8,67 +8,12 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
-    bind
-    uv
-    jdt-language-server
-    (cutter.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
-    (rizin.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
-    claude-code.packages.${system}.default
-    radare2
-    (python3.withPackages (ps: with ps; [pwntools]))
-    xxd
-    asm-lsp
-    wl-mirror
-    direnv
-    vscode
-    go-2fa
-    kdlfmt
-    xwayland-satellite.packages.${system}.default
-    alacritty
-    typst
-    tinymist
-    alejandra
-    atool
-    gimp
-    anki
-    azahar
-    delta
-    clang-tools
-    eza
-    curl
-    zip
-    fzf
-    gcc
-    gh
-    git
-    gnumake
-    helix
-    jq
-    just
-    lazygit
-    mpv
-    nix-index
-    p7zip
-    ruff
-    starship
-    stow
-    ty
-    unzip
-    vicinae
-    wezterm
-    wget
-    wl-clipboard
-    xdotool
-    yazi
-    yt-dlp
-    zoxide
-    google-chrome
-    sshpass
-    gdb
-    file
-    ghidra
-    pwndbg.packages.${system}.default
+    borgbackup
+    tmux
   ];
+
+  programs.fuse.enable = true;
+  programs.fuse.userAllowOther = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -109,58 +54,15 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # services.xserver.enable = true;
-
-  # services.displayManager.gdm.enable = true;
-  # services.desktopManager.gnome.enable = true;
-  programs.niri.enable = true;
-  programs.dms-shell.enable = true;
-
   services.xserver.xkb = {
     layout = "us";
     variant = "caps:escape";
-  };
-
-  services.printing.enable = true;
-
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
   };
 
   users.users."josh" = {
     isNormalUser = true;
     description = "josh";
     extraGroups = ["networkmanager" "wheel" "docker"];
-  };
-
-  programs.firefox.enable = true;
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      stdenv.cc.cc.lib
-      zlib
-      glibc
-      openssl
-    ];
-  };
-
-  systemd.user.services.vicinae-server = {
-    wantedBy = ["graphical-session.target"];
-    after = ["graphical-session-pre.target"];
-    partOf = ["graphical-session.target"];
-
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.vicinae}/bin/vicinae server";
-      Restart = "on-failure";
-      RestartSec = 3;
-    };
   };
 
   environment.sessionVariables = {
@@ -170,9 +72,8 @@
   };
 
   services.openssh.enable = true;
+  services.openssh.passwordAuthentication = false;
   services.upower.enable = true;
 
   networking.firewall.allowedTCPPorts = [22];
-
-  system.stateVersion = "26.05"; # Did you read the comment?
 }

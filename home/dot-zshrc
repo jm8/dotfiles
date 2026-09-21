@@ -46,8 +46,13 @@ function dl() {
 	mv ~/Downloads/"$it" .
 }
 
+if [ $(hostname) = "estella" ]; then
+	pkgs_path=server
+else
+	pkgs_path=graphical
+fi
 function pkg() {
-	hx ~/dotfiles/nix-config/sys/common.nix:$(grep --line-number "with pkgs" ~/dotfiles/nix-config/sys/common.nix | head -n1 | cut -d: -f1) ~/dotfiles/nix-config/flake.nix 
+	hx ~/dotfiles/nix-config/sys/$pkgs_path.nix:$(grep --line-number "with pkgs" ~/dotfiles/nix-config/sys/$pkgs_path.nix | head -n1 | cut -d: -f1) ~/dotfiles/nix-config/sys/common.nix:$(grep --line-number "with pkgs" ~/dotfiles/nix-config/sys/common.nix | head -n1 | cut -d: -f1) ~/dotfiles/nix-config/flake.nix ~/dotfiles/nix-config/sys/$(hostname).nix 
 	env -C ~/dotfiles just nix
 }
 
