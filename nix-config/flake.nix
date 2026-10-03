@@ -27,11 +27,7 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
-      config.allowUnfreePredicate = pkg:
-        builtins.elem (nixpkgs.lib.getName pkg) [
-          "google-chrome"
-          "vscode"
-        ];
+      config.allowUnfreePredicate = pkg: true;
     };
   in {
     nixosConfigurations.stryver = nixpkgs.lib.nixosSystem {

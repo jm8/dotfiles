@@ -30,3 +30,7 @@ injection-regex = "gas"
 comment-token = "#"
 indent = { tab-width = 8, unit = "        " }
 language-servers = ["asm-lsp"]
+
+[[language]]
+name = "typst"
+# auto-format = true
