@@ -10,12 +10,31 @@
   environment.systemPackages = with pkgs; [
     borgbackup
     tmux
+    libnotify
   ];
+
+  systemd.services.update = {
+    serviceConfig = {
+      Type = "oneshot";
+      User = "josh";
+      ExecStart = "/home/josh/dotfiles/update.sh";
+    };
+  };
+
+  systemd.timers.update = {
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+      RandomizedDelaySec = "30m";
+    };
+  };
 
   programs.fuse.enable = true;
   programs.fuse.userAllowOther = true;
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
 
   hardware.graphics = {
