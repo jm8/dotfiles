@@ -7,66 +7,15 @@
   claude-code,
   ...
 }: {
-  services.pulseaudio.enable = false;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [
-      cups-filters
-      cups-browsed
-    ];
-  };
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    wireplumber.enable = true;
-  };
-  security.rtkit.enable = true;
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gnome];
-  };
-
-  services.pipewire.wireplumber.extraConfig."80-passthrough" = {
-    "monitor.alsa.rules" = [
-      {
-        matches = [
-          {
-            # Matches all HDMI and S/PDIF digital outputs
-            "node.name" = "~alsa_output.*";
-          }
-        ];
-        apply_properties = {
-          # Force-enable bitstream capabilities
-          "audio.allowed-rates" = "44100,48000";
-          "api.alsa.passthrough" = true;
-        };
-      }
-    ];
-  };
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-color-emoji
-    noto-fonts-cjk-sans
-  ];
-
   environment.systemPackages = with pkgs; [
+    calibre
     bind
     uv
-    jdt-language-server
-    (cutter.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
-    (rizin.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
+    # jdt-language-server
+    # (cutter.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
+    # (rizin.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
     claude-code.packages.${system}.default
-    radare2
+    # radare2
     (python3.withPackages (ps: with ps; [pwntools]))
     xxd
     asm-lsp
@@ -118,7 +67,60 @@
     gdb
     file
     ghidra
-    pwndbg.packages.${system}.default
+    # pwndbg.packages.${system}.default
+  ];
+
+  services.pulseaudio.enable = false;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+  programs.firefox.enable = true;
+
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      cups-filters
+      cups-browsed
+    ];
+  };
+
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+  security.rtkit.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gnome];
+  };
+
+  services.pipewire.wireplumber.extraConfig."80-passthrough" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [
+          {
+            # Matches all HDMI and S/PDIF digital outputs
+            "node.name" = "~alsa_output.*";
+          }
+        ];
+        apply_properties = {
+          # Force-enable bitstream capabilities
+          "audio.allowed-rates" = "44100,48000";
+          "api.alsa.passthrough" = true;
+        };
+      }
+    ];
+  };
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-color-emoji
+    noto-fonts-cjk-sans
   ];
 
   programs.niri.enable = true;

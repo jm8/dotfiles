@@ -8,10 +8,13 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    killall
     borgbackup
     tmux
     libnotify
   ];
+
+  services.udisks2.enable = true;
 
   systemd.services.update = {
     serviceConfig = {

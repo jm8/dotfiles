@@ -39,33 +39,33 @@ return {
 	},
 	keys = {
 		{ key = "e", mods = "CTRL|SHIFT", action = wezterm.action({ EmitEvent = "open-scrollback-in-helix" }) },
-		{
-			key = "Space",
-			mods = "CTRL|SHIFT",
-			action = wezterm.action.InputSelector({
-				title = "Quick Select",
-				choices = {
-					{ id = "hash", label = "h  Hashes" },
-					{ id = "quote", label = "'  Single-quoted strings" },
-					{ id = "paren", label = "(  Parens" },
-				},
-				alphabet = "h'(",
-				action = wezterm.action_callback(function(window, pane, id, _label)
-					if not id then
-						return
-					end
-					local quick_select_patterns = {
-						hash = { "(?i)(0x)?\\b[0-9a-f]{4,64}\\b" },
-						quote = { "(?<=')[^'\\\\]*(?:\\\\.[^'\\\\]*)*(?=')" },
-						paren = { "\\((?:[^()]|\\((?:[^()]|\\([^()]*\\))*\\))*\\)" },
-					}
-					window:perform_action(
-						wezterm.action.QuickSelectArgs({ patterns = quick_select_patterns[id] }),
-						pane
-					)
-				end),
-			}),
-		},
+		-- {
+		-- 	key = "Space",
+		-- 	mods = "CTRL|SHIFT",
+		-- 	action = wezterm.action.InputSelector({
+		-- 		title = "Quick Select",
+		-- 		choices = {
+		-- 			{ id = "hash", label = "h  Hashes" },
+		-- 			{ id = "quote", label = "'  Single-quoted strings" },
+		-- 			{ id = "paren", label = "(  Parens" },
+		-- 		},
+		-- 		alphabet = "h'(",
+		-- 		action = wezterm.action_callback(function(window, pane, id, _label)
+		-- 			if not id then
+		-- 				return
+		-- 			end
+		-- 			local quick_select_patterns = {
+		-- 				hash = { "(?i)(0x)?\\b[0-9a-f]{4,64}\\b" },
+		-- 				quote = { "(?<=')[^'\\\\]*(?:\\\\.[^'\\\\]*)*(?=')" },
+		-- 				paren = { "\\((?:[^()]|\\((?:[^()]|\\([^()]*\\))*\\))*\\)" },
+		-- 			}
+		-- 			window:perform_action(
+		-- 				wezterm.action.QuickSelectArgs({ patterns = quick_select_patterns[id] }),
+		-- 				pane
+		-- 			)
+		-- 		end),
+		-- 	}),
+		-- },
 	},
 	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 	-- warn_about_missing_glyphs=false,
