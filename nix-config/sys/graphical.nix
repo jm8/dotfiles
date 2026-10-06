@@ -8,6 +8,7 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    alsa-utils
     calibre
     bind
     uv
@@ -33,6 +34,7 @@
     gimp
     anki
     azahar
+    pavucontrol
     delta
     clang-tools
     eza
@@ -100,23 +102,6 @@
     extraPortals = [pkgs.xdg-desktop-portal-gnome];
   };
 
-  services.pipewire.wireplumber.extraConfig."80-passthrough" = {
-    "monitor.alsa.rules" = [
-      {
-        matches = [
-          {
-            # Matches all HDMI and S/PDIF digital outputs
-            "node.name" = "~alsa_output.*";
-          }
-        ];
-        apply_properties = {
-          # Force-enable bitstream capabilities
-          "audio.allowed-rates" = "44100,48000";
-          "api.alsa.passthrough" = true;
-        };
-      }
-    ];
-  };
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-color-emoji
