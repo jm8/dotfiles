@@ -8,6 +8,7 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    usbutils
     killall
     borgbackup
     tmux
