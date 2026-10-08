@@ -8,6 +8,7 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    entr
     alsa-utils
     calibre
     bind
