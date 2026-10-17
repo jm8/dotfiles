@@ -68,6 +68,7 @@
         }
       ],
       "rightWidgets": [
+        "keyboard_layout_name",
         "systemTray",
         "clipboard",
         {
