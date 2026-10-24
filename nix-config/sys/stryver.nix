@@ -11,6 +11,20 @@
 
   networking.hostName = "stryver";
 
+  services.resolved = {
+    enable = true;
+    settings.Resolve = {
+      DNS = [
+        "45.90.28.0#stryver-46c643.dns.nextdns.io"
+        "2a07:a8c0::#stryver-46c643.dns.nextdns.io"
+        "45.90.30.0#stryver-46c643.dns.nextdns.io"
+        "2a07:a8c1::#stryver-46c643.dns.nextdns.io"
+      ];
+      DNSOverTLS = "true";
+      Domains = ["~."];
+    };
+  };
+
   boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
