@@ -8,6 +8,9 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    flyctl
+    entr
+    distrobox
     usbutils
     killall
     borgbackup

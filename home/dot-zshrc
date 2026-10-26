@@ -60,4 +60,5 @@ function take() {
 	mkdir "$1" && cd "$1"
 }
 
+eval "$(just --completions  zsh)"
 alias zshrc="hx ~/.zshrc; source ~/.zshrc"

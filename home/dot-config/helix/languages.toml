@@ -5,8 +5,8 @@ auto-format = true
 
 [[language]]
 name = "c"
-file-types = ["c", "h"]
-auto-format = true
+file-types = ["c", "h", "ac"]
+# auto-format = true
 
 [language-server.ruff]
 command = "ruff"

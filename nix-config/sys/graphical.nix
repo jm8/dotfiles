@@ -8,8 +8,6 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
-    flyctl
-    entr
     alsa-utils
     calibre
     bind
