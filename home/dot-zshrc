@@ -14,11 +14,7 @@ if [ ! -e ~/dotfiles/zsh/fzf.zsh ]; then
 	zcompile ~/dotfiles/zsh/fzf.zsh
 fi
 source ~/dotfiles/zsh/fzf.zsh
-if [ ! -e ~/dotfiles/zsh/direnv.zsh ]; then
-	direnv hook zsh > ~/dotfiles/zsh/direnv.zsh
-	zcompile ~/dotfiles/zsh/direnv.zsh
-fi
-source ~/dotfiles/zsh/direnv.zsh
+eval "$(direnv hook zsh)"
 source ~/dotfiles/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 function precmd() {
