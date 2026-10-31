@@ -217,5 +217,6 @@
     "niri"
   ],
   "batteryAutoPowerSaver": false,
-  "batteryProfileName": "0"
+  "batteryProfileName": "0",
+  "acProfileName": "0"
 }
