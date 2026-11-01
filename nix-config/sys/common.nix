@@ -5,9 +5,15 @@
   system,
   xwayland-satellite,
   claude-code,
+  llm-agents,
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    mold
+    btop
+    ripgrep
+    llama-cpp-vulkan
+    llm-agents.packages.${system}.ori
     flyctl
     entr
     distrobox

@@ -8,6 +8,8 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    ioquake3
+    brightnessctl
     alsa-utils
     calibre
     bind
@@ -15,7 +17,6 @@
     # jdt-language-server
     # (cutter.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
     # (rizin.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
-    claude-code.packages.${system}.default
     # radare2
     (python3.withPackages (ps: with ps; [pwntools]))
     xxd
@@ -110,4 +111,19 @@
 
   programs.niri.enable = true;
   programs.dms-shell.enable = true;
+
+  programs.ioquake3 = {
+    enable = true;
+    settings = {
+      name = "onny";
+      com_maxfps = 125;
+      cg_frawFPS = true;
+      cg_fov = 115;
+      r_mode = "-1";
+      r_customheight = 1080;
+      r_customwidth = 1920;
+      model = "sarge/default";
+    };
+    baseq3 = "/home/josh/Quake 3 Arena/baseq3";
+  };
 }

@@ -58,3 +58,6 @@ function take() {
 
 eval "$(just --completions  zsh)"
 alias zshrc="hx ~/.zshrc; source ~/.zshrc"
+
+alias mv="mv -i"
+alias cp="cp -i"

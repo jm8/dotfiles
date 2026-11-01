@@ -17,6 +17,9 @@
     pwndbg = {
       url = "github:pwndbg/pwndbg";
     };
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+    };
   };
 
   outputs = {
