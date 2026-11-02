@@ -9,6 +9,7 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    claude-code.packages.${system}.default
     mold
     btop
     ripgrep
