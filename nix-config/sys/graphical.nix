@@ -8,6 +8,7 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    musescore
     ioquake3
     brightnessctl
     alsa-utils

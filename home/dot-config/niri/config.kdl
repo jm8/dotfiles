@@ -466,10 +466,10 @@ binds {
     //
     // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
     // will all refer to the 3rd workspace.
-    Mod+BracketLeft {
+    Mod+Ctrl+A {
         consume-or-expel-window-left
     }
-    Mod+BracketRight {
+    Mod+Ctrl+D {
         consume-or-expel-window-right
     }
     Mod+Comma {

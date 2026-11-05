@@ -58,5 +58,8 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  services.thermald.enable = true;
+  services.tlp.enable = true;
+
   system.stateVersion = "26.05"; # Did you read the comment?
 }
