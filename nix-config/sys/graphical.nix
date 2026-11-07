@@ -8,6 +8,8 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    patchelf
+    pwninit
     musescore
     ioquake3
     brightnessctl

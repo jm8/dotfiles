@@ -3,6 +3,8 @@
   lib,
   pkgs,
   modulesPath,
+  system,
+  pwndbg,
   ...
 }: {
   imports = [
@@ -10,6 +12,10 @@
   ];
 
   networking.hostName = "stryver";
+
+  environment.systemPackages = [
+    pwndbg.packages.${system}.default
+  ];
 
   services.resolved = {
     enable = true;
