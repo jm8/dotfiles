@@ -1,0 +1,3 @@
+#!/bin/sh
+# pwntools runs `pwntools-gdb` in preference to `gdb` if it is on PATH.
+exec pwndbg "$@"

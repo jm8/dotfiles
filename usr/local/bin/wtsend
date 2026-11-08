@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+"""Send keystrokes to a named wezterm terminal (named with CTRL+SHIFT+I).
+
+usage:
+  wtsend NAME STRING     send STRING, then press Enter
+  wtsend -n NAME STRING  don't press Enter afterwards
+  wtsend NAME            read STRING from stdin
+  wtsend -l              list named terminals
+  wtsend -t NAME         print the tty of a named terminal
+
+'@' starts a key name. One space directly after a key name is consumed as
+its terminator; every other space is sent as typed.
+  @enter @return @tab @esc @backspace @space @at (a literal @)
+  @up @down @left @right @home @end @insert @delete @pgup @pgdn @f1..@f12
+  @ctrl-c @alt-x @ctrl-alt-d @alt-enter ...
+example:
+  wtsend build '@ctrl-c make test'   # Ctrl-C, then "make test", then Enter
+"""
+
+import argparse
+import glob
+import json
+import os
+import re
+import subprocess
+import sys
+
+NAMED_KEYS = {
+    "enter": "\r", "return": "\r", "tab": "\t",
+    "esc": "\x1b", "escape": "\x1b",
+    "backspace": "\x7f", "bs": "\x7f",
+    "space": " ", "at": "@",
+    "up": "\x1b[A", "down": "\x1b[B", "right": "\x1b[C", "left": "\x1b[D",
+    "home": "\x1b[H", "end": "\x1b[F",
+    "insert": "\x1b[2~", "ins": "\x1b[2~",
+    "delete": "\x1b[3~", "del": "\x1b[3~",
+    "pgup": "\x1b[5~", "pageup": "\x1b[5~",
+    "pgdn": "\x1b[6~", "pagedown": "\x1b[6~",
+    "f1": "\x1bOP", "f2": "\x1bOQ", "f3": "\x1bOR", "f4": "\x1bOS",
+    "f5": "\x1b[15~", "f6": "\x1b[17~", "f7": "\x1b[18~", "f8": "\x1b[19~",
+    "f9": "\x1b[20~", "f10": "\x1b[21~", "f11": "\x1b[23~", "f12": "\x1b[24~",
+}
+
+# @ + any number of modifiers + a key word (or, after a modifier, any single
+# character such as '[') + an optional terminating space.
+KEY_RE = re.compile(r"@((?:(?:ctrl|alt)-)*)([A-Za-z0-9]+|(?<=-)[^\s])( ?)", re.IGNORECASE)
+
+
+def ctrl(ch):
+    if ch == " ":
+        return "\x00"
+    if ch == "?":
+        return "\x7f"
+    up = ch.upper()
+    if len(up) == 1 and "@" <= up <= "_":
+        return chr(ord(up) ^ 0x40)
+    raise ValueError(f"can't apply ctrl to {ch!r}")
+
+
+def key(mods, name):
+    mods = [m for m in mods.lower().split("-") if m]
+    lname = name.lower()
+    if lname in NAMED_KEYS:
+        seq = NAMED_KEYS[lname]
+    elif mods and len(name) == 1:
+        seq = name
+    else:
+        raise ValueError(f"unknown key '@{'-'.join(mods + [name])}'")
+    if "ctrl" in mods:
+        if len(seq) != 1:
+            raise ValueError(f"can't apply ctrl to @{name}")
+        seq = ctrl(seq)
+    if "alt" in mods:
+        seq = "\x1b" + seq
+    return seq
+
+
+def parse(text):
+    out, pos = [], 0
+    while (at := text.find("@", pos)) != -1:
+        out.append(text[pos:at])
+        m = KEY_RE.match(text, at)
+        if not m:
+            raise ValueError(f"bad key at position {at}: {text[at:at + 12]!r} (use @at for a literal @)")
+        out.append(key(m.group(1), m.group(2)))
+        pos = m.end()
+    out.append(text[pos:])
+    return "".join(out)
+
+
+def named_panes():
+    """Yield (socket, pane_id, name, tty). Each launchterm window is its own
+    wezterm process (--always-new-process), so every gui socket is searched."""
+    runtime = os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}")
+    for sock in sorted(glob.glob(f"{runtime}/wezterm/gui-sock-*")):
+        try:
+            res = subprocess.run(
+                ["wezterm", "cli", "--no-auto-start", "list", "--format", "json"],
+                env={**os.environ, "WEZTERM_UNIX_SOCKET": sock},
+                capture_output=True, text=True, timeout=2,
+            )
+            panes = json.loads(res.stdout) if res.returncode == 0 else []
+        except (subprocess.TimeoutExpired, json.JSONDecodeError):
+            continue  # stale socket
+        for p in panes:
+            if p.get("tab_title"):
+                yield sock, p["pane_id"], p["tab_title"], p.get("tty_name")
+
+
+def main():
+    ap = argparse.ArgumentParser(
+        prog="wtsend", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter,
+        usage=argparse.SUPPRESS,
+    )
+    ap.add_argument("-n", action="store_true", help="don't press Enter afterwards")
+    ap.add_argument("-l", action="store_true", help="list named terminals")
+    ap.add_argument("-t", action="store_true", help="print the tty of the named terminal")
+    ap.add_argument("name", nargs="?")
+    ap.add_argument("string", nargs="?")
+    args = ap.parse_args()
+
+    if args.l:
+        for name in sorted({name for _, _, name, _ in named_panes()}):
+            print(name)
+        return 0
+    if args.name is None:
+        ap.error("NAME is required")
+
+    target = next(((s, p, t) for s, p, n, t in named_panes() if n == args.name), None)
+    if target is None:
+        print(f"wtsend: no terminal named '{args.name}'", file=sys.stderr)
+        return 1
+    sock, pane, tty = target
+    if args.t:
+        print(tty)
+        return 0
+
+    raw = args.string if args.string is not None else sys.stdin.read().rstrip("\n")
+    try:
+        data = parse(raw)
+    except ValueError as e:
+        print(f"wtsend: {e}", file=sys.stderr)
+        return 2
+    if not args.n:
+        data += "\r"
+
+    return subprocess.run(
+        ["wezterm", "cli", "--no-auto-start", "send-text", "--no-paste", "--pane-id", str(pane)],
+        input=data.encode(), env={**os.environ, "WEZTERM_UNIX_SOCKET": sock},
+    ).returncode
+
+
+if __name__ == "__main__":
+    sys.exit(main())

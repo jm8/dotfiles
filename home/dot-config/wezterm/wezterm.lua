@@ -18,6 +18,73 @@ wezterm.on("open-scrollback-in-helix", function(window, pane)
 	tab:set_zoomed(true)
 end)
 
+-- Named terminals -----------------------------------------------------------
+-- The name is stored as the tab title, so it is visible to
+-- `wezterm cli list` (used by the `wtsend` script). Named windows get a
+-- tinted background chosen from the name.
+local base_scheme_name = "Catppuccin Macchiato"
+local named_backgrounds = {
+	"#3b2431", -- red
+	"#233a2b", -- green
+	"#22304d", -- blue
+	"#33244d", -- purple
+	"#3d3122", -- orange
+	"#203a3c", -- teal
+}
+
+local function apply_name_colors(window, name)
+	wezterm.GLOBAL.applied_names = wezterm.GLOBAL.applied_names or {}
+	local key = tostring(window:window_id())
+	if (wezterm.GLOBAL.applied_names[key] or "") == name then
+		return
+	end
+	wezterm.GLOBAL.applied_names[key] = name
+
+	local overrides = window:get_config_overrides() or {}
+	if name == "" then
+		overrides.color_schemes = nil
+		overrides.color_scheme = nil
+	else
+		local scheme = {}
+		for k, v in pairs(wezterm.color.get_builtin_schemes()[base_scheme_name]) do
+			scheme[k] = v
+		end
+		local h = 0
+		for i = 1, #name do
+			h = (h * 31 + name:byte(i)) % 2147483647
+		end
+		scheme.background = named_backgrounds[h % #named_backgrounds + 1]
+		overrides.color_schemes = { ["named-terminal"] = scheme }
+		overrides.color_scheme = "named-terminal"
+	end
+	window:set_config_overrides(overrides)
+end
+
+-- Keep colors in sync if the name is changed elsewhere
+-- (e.g. `wezterm cli set-tab-title`).
+wezterm.on("update-status", function(window, _pane)
+	apply_name_colors(window, window:active_tab():get_title())
+end)
+
+wezterm.on("format-window-title", function(tab, pane, _tabs, _panes, _config)
+	if tab.tab_title ~= "" then
+		return "[" .. tab.tab_title .. "] " .. pane.title
+	end
+	return pane.title
+end)
+
+local name_terminal = wezterm.action.PromptInputLine({
+	description = "Name this terminal (empty to clear):",
+	action = wezterm.action_callback(function(window, _pane, line)
+		if line == nil then
+			return
+		end
+		line = line:gsub("^%s+", ""):gsub("%s+$", "")
+		window:active_tab():set_title(line)
+		apply_name_colors(window, line)
+	end),
+})
+
 return {
 	color_scheme = "Catppuccin Macchiato",
 	enable_wayland = false,
@@ -39,6 +106,7 @@ return {
 	},
 	keys = {
 		{ key = "e", mods = "CTRL|SHIFT", action = wezterm.action({ EmitEvent = "open-scrollback-in-helix" }) },
+		{ key = "i", mods = "CTRL|SHIFT", action = name_terminal },
 		-- {
 		-- 	key = "Space",
 		-- 	mods = "CTRL|SHIFT",

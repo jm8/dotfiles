@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+"""pwntools terminal: run the command in the wezterm terminal named "debug".
+
+pwntools uses `pwntools-terminal` automatically when it is on PATH, or set
+    context.terminal = ["pwntools-terminal"]
+
+Any gdb already running in that terminal is killed first, then the command is
+typed into its shell with wtsend. Name a terminal with CTRL+SHIFT+I.
+
+This script keeps running until that gdb exits, because pwntools watches the
+terminal's pid to tell whether the debugger is still alive. When pwntools
+SIGTERMs it at exit, gdb is left running in the debug terminal.
+Set WT_DEBUG_NAME to target a terminal with a different name.
+"""
+
+import os
+import shlex
+import signal
+import subprocess
+import sys
+import time
+
+NAME = os.environ.get("WT_DEBUG_NAME", "debug")
+
+
+def gdb_pids(tty):
+    out = subprocess.run(
+        ["ps", "-t", tty.removeprefix("/dev/"), "-o", "pid=,args="],
+        capture_output=True, text=True,
+    ).stdout
+    pids = []
+    for line in out.splitlines():
+        pid, *argv = line.split()
+        # pwndbg runs gdb through ld-linux, so look at the first two words.
+        if any("gdb" in os.path.basename(a) for a in argv[:2]):
+            pids.append(int(pid))
+    return pids
+
+
+def kill_gdb(tty):
+    pids = gdb_pids(tty)
+    for sig in (signal.SIGTERM, signal.SIGKILL):
+        for pid in pids:
+            try:
+                os.kill(pid, sig)
+            except ProcessLookupError:
+                pass
+        for _ in range(20):
+            pids = gdb_pids(tty)
+            if not pids:
+                return
+            time.sleep(0.05)
+
+
+def main():
+    args = sys.argv[1:]
+    if not args:
+        print(__doc__.strip(), file=sys.stderr)
+        return 2
+    # pwntools passes a single shell command string (or a script path).
+    command = args[0] if len(args) == 1 else shlex.join(args)
+
+    res = subprocess.run(["wtsend", "-t", NAME], capture_output=True, text=True)
+    if res.returncode != 0:
+        sys.stderr.write(res.stderr)
+        subprocess.run(["notify-send", "pwntools-terminal", f"no wezterm terminal named '{NAME}'"])
+        return 1
+    tty = res.stdout.strip()
+    kill_gdb(tty)
+
+    # @ctrl-u clears anything left on the shell's command line.
+    sent = subprocess.run(["wtsend", NAME, "@ctrl-u " + command.replace("@", "@at ")])
+    if sent.returncode != 0:
+        return sent.returncode
+
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
+    deadline = time.monotonic() + 10
+    while not gdb_pids(tty):
+        if time.monotonic() > deadline:
+            return 1
+        time.sleep(0.1)
+    while gdb_pids(tty):
+        time.sleep(0.25)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
