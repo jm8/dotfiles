@@ -9,6 +9,9 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    pstree
+    netcat-openbsd
+    sqlite
     claude-code.packages.${system}.default
     mold
     btop
@@ -23,7 +26,12 @@
     borgbackup
     tmux
     libnotify
+    man-pages
+    man-pages-posix
   ];
+
+  documentation.dev.enable = true;
+  documentation.man.generateCaches = true;
 
   services.udisks2.enable = true;
 

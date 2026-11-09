@@ -8,6 +8,7 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
+    sqlitebrowser
     patchelf
     pwninit
     musescore

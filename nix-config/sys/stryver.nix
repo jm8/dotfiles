@@ -64,6 +64,11 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [9000];
+  };
+
   services.thermald.enable = true;
   services.tlp.enable = true;
 
